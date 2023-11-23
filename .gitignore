@@ -1,0 +1,5 @@
+data/original_images/*.jpg
+data/testset/*.jpg
+data/trainset/*.jpg
+
+notebooks/
