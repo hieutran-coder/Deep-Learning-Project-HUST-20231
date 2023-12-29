@@ -4,5 +4,13 @@ data/train_3/images/*.jpg
 data/test/images/*.jpg
 data/valid/images/*.jpg
 data/test/images/*.jpeg
+data/test/*.test
 
 notebooks/
+
+*__pycache__/
+
+logs/
+saved_models/
+
+*.ipynb
