@@ -73,9 +73,8 @@ class LitModel(pl.LightningModule):
 
         # Log training loss
         self.log('loss', loss.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
-        # self.log("feat_lr", feat_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
-        # self.log("head_lr", head_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
-        print()
+        self.log("feat_lr", feat_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
+        self.log("head_lr", head_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
         
 
     def on_train_epoch_end(self):
@@ -111,7 +110,6 @@ class LitModel(pl.LightningModule):
         self.log('val_f1', f1.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
         self.log('val_precision', precision.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
         self.log('val_recall', recall.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
-        print()
 
         # Update metrics
         self.loss_val_avg.add(loss.item())
@@ -128,15 +126,11 @@ class LitModel(pl.LightningModule):
         print(f"Validation f1: {self.f1_val_avg.val():.4f}")
         print(f"Validation precision: {self.precision_val_avg.val():.4f}")
         print(f"Validation recall: {self.recall_val_avg.val():.4f}")
-        print()
         self.loss_val_avg.reset()
         self.acc_val_avg.reset()
         self.f1_val_avg.reset()
         self.precision_val_avg.reset()
         self.recall_val_avg.reset()
-
-    def on_validation_epoch_start(self):
-        print("Validating...")
 
 
 def train(args):
