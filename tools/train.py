@@ -76,7 +76,6 @@ class LitModel(pl.LightningModule):
         self.log("feat_lr", feat_optimizer.param_groups[0]["lr"], prog_bar=True)
         self.log("head_lr", head_optimizer.param_groups[0]["lr"], prog_bar=True)
         print()
-        print(f"Training loss: {loss.item():.4f}")
         
 
     def on_train_epoch_end(self):
@@ -107,11 +106,11 @@ class LitModel(pl.LightningModule):
         f1 = 2 * precision * recall / (precision + recall)
 
         # Log validation loss
-        self.log('val_loss', loss, reduce_fx="mean", prog_bar=True)
-        self.log('val_acc', acc, reduce_fx="mean", prog_bar=True)
-        self.log('val_f1', f1, reduce_fx="mean", prog_bar=True)
-        self.log('val_precision', precision, reduce_fx="mean", prog_bar=True)
-        self.log('val_recall', recall, reduce_fx="mean", prog_bar=True)
+        self.log('val_loss', loss.item(), reduce_fx="mean")
+        self.log('val_acc', acc.item(), reduce_fx="mean")
+        self.log('val_f1', f1.item(), reduce_fx="mean")
+        self.log('val_precision', precision.item(), reduce_fx="mean")
+        self.log('val_recall', recall.item(), reduce_fx="mean")
         print()
 
         # Update metrics
@@ -135,6 +134,9 @@ class LitModel(pl.LightningModule):
         self.f1_val_avg.reset()
         self.precision_val_avg.reset()
         self.recall_val_avg.reset()
+
+    def on_validation_epoch_start(self):
+        print("Validating...")
 
 
 def train(args):
