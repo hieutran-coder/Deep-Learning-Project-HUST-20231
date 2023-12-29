@@ -120,6 +120,7 @@ class LitModel(pl.LightningModule):
 
     def on_validation_epoch_end(self):
         print()
+        print('-' * 10)
         print(f"Validation loss: {self.loss_val_avg.val():.4f}")
         print(f"Validation accuracy: {self.acc_val_avg.val():.4f}")
         print(f"Validation f1: {self.f1_val_avg.val():.4f}")
