@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import timm
 
@@ -72,4 +73,5 @@ class Model(nn.Module):
     def forward(self, x):
         x = self.feature_extractor(x)
         x = self.classifier(x)
+        x = torch.sigmoid(x)
         return x
