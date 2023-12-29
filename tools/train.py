@@ -94,8 +94,6 @@ class LitModel(pl.LightningModule):
         loss = self.criterion(preds, labels)
 
         # Calculate metrics
-        print(preds)
-        preds = torch.sigmoid(preds)
         preds = (preds > 0.5).float()
         acc = (preds == labels).sum() / (batch_size * 10)
         tp = (preds * labels).sum()
