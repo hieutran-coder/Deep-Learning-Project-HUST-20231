@@ -72,9 +72,9 @@ class LitModel(pl.LightningModule):
         head_optimizer.step()
 
         # Log training loss
-        self.log('train_loss', loss, reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
-        self.log("feat_lr", feat_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
-        self.log("head_lr", head_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
+        self.log('loss', loss.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
+        # self.log("feat_lr", feat_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
+        # self.log("head_lr", head_optimizer.param_groups[0]["lr"], prog_bar=True, on_step=False, on_epoch=True)
         print()
         
 
