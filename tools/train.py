@@ -106,11 +106,11 @@ class LitModel(pl.LightningModule):
         f1 = 2 * precision * recall / (precision + recall)
 
         # Log validation loss
-        self.log('val_loss', loss.item(), reduce_fx="mean")
-        self.log('val_acc', acc.item(), reduce_fx="mean")
-        self.log('val_f1', f1.item(), reduce_fx="mean")
-        self.log('val_precision', precision.item(), reduce_fx="mean")
-        self.log('val_recall', recall.item(), reduce_fx="mean")
+        self.log('val_loss', loss.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
+        self.log('val_acc', acc.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
+        self.log('val_f1', f1.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
+        self.log('val_precision', precision.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
+        self.log('val_recall', recall.item(), reduce_fx="mean", prog_bar=True, on_step=False, on_epoch=True)
         print()
 
         # Update metrics
