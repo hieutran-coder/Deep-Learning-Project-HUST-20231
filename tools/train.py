@@ -75,6 +75,8 @@ class LitModel(pl.LightningModule):
         self.log('train_loss', loss, reduce_fx="mean", prog_bar=True)
         self.log("feat_lr", feat_optimizer.param_groups[0]["lr"], prog_bar=True)
         self.log("head_lr", head_optimizer.param_groups[0]["lr"], prog_bar=True)
+        print(f"Training loss: {loss.item():.4f}")
+        
 
     def on_train_epoch_end(self):
         # Get the scheduler
