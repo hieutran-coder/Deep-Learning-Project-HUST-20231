@@ -26,6 +26,8 @@ class LitModel(pl.LightningModule):
 
         self.automatic_optimization = False
 
+        self.best_f1 = 0.0
+
     def configure_optimizers(self):
         feat_optimizer = create_optimizer_v2(
             self.model.feature_extractor,
@@ -120,6 +122,14 @@ class LitModel(pl.LightningModule):
 
 
     def on_validation_epoch_end(self):
+        current_f1 = self.f1_val_avg.val()
+        if current_f1 > self.best_f1:
+            self.best_f1 = current_f1
+            if self.args.train_full:
+                torch.save(self.model.state_dict(), f"saved_models/{self.args.model}_full.pt")
+            else:
+                torch.save(self.model.state_dict(), f"saved_models/{self.args.model}_val.pt")
+
         print('-' * 10)
         print(f"Validation loss: {self.loss_val_avg.val():.4f}")
         print(f"Validation accuracy: {self.acc_val_avg.val():.4f}")
@@ -170,13 +180,5 @@ def train(args):
         trainer.fit(pl_model, train_loader)
     else:
         trainer.fit(pl_model, train_loader, val_loader)
-
-    # Save model
-    print('-' * 25)
-    print("Saving model")
-    if args.train_full:
-        torch.save(pl_model.model.state_dict(), f"saved_models/{args.model}_full.pt")
-    else:
-        torch.save(pl_model.model.state_dict(), f"saved_models/{args.model}_val.pt")
 
     return pl_model.model
