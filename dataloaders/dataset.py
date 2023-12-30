@@ -17,6 +17,7 @@ class MultiLabelDataset(Dataset):
         self.root_dir = root_dir
         self.transform = transform
         self.labels = self._load_labels()
+        self.img_names = sorted(os.listdir(os.path.join(self.root_dir, "images")))
 
     def __len__(self):
         return len(os.listdir(os.path.join(self.root_dir, "images")))
@@ -31,16 +32,18 @@ class MultiLabelDataset(Dataset):
     
     def __getitem__(self, idx):
         # Load image
-        try:
-            img_name = f'{idx + 1}.jpg'
-            image = Image.open(os.path.join(self.root_dir, f"images/{img_name}"))
-        except:
-            try:
-                img_name = f'{idx + 1}.png'
-                image = Image.open(os.path.join(self.root_dir, f"images/{img_name}"))
-            except:
-                img_name = f'{idx + 1}.jpeg'
-                image = Image.open(os.path.join(self.root_dir, f"images/{img_name}"))
+        img_name = self.img_names[idx]
+        image = Image.open(os.path.join(self.root_dir, f"images/{img_name}"))
+        # try:
+        #     img_name = f'{idx + 1}.jpg'
+        #     image = Image.open(os.path.join(self.root_dir, f"images/{img_name}"))
+        # except:
+        #     try:
+        #         img_name = f'{idx + 1}.png'
+        #         image = Image.open(os.path.join(self.root_dir, f"images/{img_name}"))
+        #     except:
+        #         img_name = f'{idx + 1}.jpeg'
+        #         image = Image.open(os.path.join(self.root_dir, f"images/{img_name}"))
 
         if self.transform:
             image = self.transform(image)
