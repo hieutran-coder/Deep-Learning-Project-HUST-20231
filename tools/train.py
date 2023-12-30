@@ -5,7 +5,7 @@ import pytorch_lightning as pl
 
 from timm.optim import create_optimizer_v2
 from tools.utils import Averager
-from dataloaders import create_dataset, create_dataloaders
+from dataloaders import create_dataset, create_dataloader
 from models import Model
 
 
@@ -138,7 +138,7 @@ def train(args):
     # Create dataset and dataloader
     if args.train_full:
         train_dataset = create_dataset(args.train_dirs + args.val_dirs, is_train=True)
-        train_loader = create_dataloaders(
+        train_loader = create_dataloader(
             train_dataset, batch_size=args.batch_size, 
             num_workers=args.num_workers ,is_train=True
         )
@@ -146,11 +146,11 @@ def train(args):
         train_dataset = create_dataset(args.train_dirs, is_train=True)
         val_dataset = create_dataset(args.val_dirs, is_train=False)
 
-        train_loader = create_dataloaders(
+        train_loader = create_dataloader(
             train_dataset, batch_size=args.batch_size, 
             num_workers=args.num_workers ,is_train=True
         )
-        val_loader = create_dataloaders(
+        val_loader = create_dataloader(
             val_dataset, batch_size=args.batch_size, 
             num_workers=args.num_workers ,is_train=True
         )

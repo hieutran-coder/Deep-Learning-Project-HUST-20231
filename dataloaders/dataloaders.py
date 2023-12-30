@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader, Dataset, Subset, ConcatDataset
 from torchvision import transforms
 from functools import partial
 
-def create_dataloaders(
+def create_dataloader(
     dataset: Dataset,
     batch_size: int = 64,
     num_workers: int = 4,
