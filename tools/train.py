@@ -176,9 +176,13 @@ def train(args):
     if args.train_full:
         trainer.fit(pl_model, train_loader)
         torch.save(pl_model.model.state_dict(), f"saved_models/{args.model}_full.pt")
+        return pl_model.model
     else:
         trainer.fit(pl_model, train_loader, val_loader)
 
         print(f"Best validation f1: {pl_model.best_f1:.4f}")
 
-    return pl_model.model
+        model = pl_model.model
+        model.load_state_dict(torch.load(f"saved_models/{args.model}_val.pt"))
+        return model
+    
