@@ -50,7 +50,7 @@ class MultiLabelDataset(Dataset):
 
         # Load label
         if self.labels is not None:
-            label = torch.tensor(self.labels.iloc[idx].values.astype('int')).float()
+            label = torch.tensor(self.labels.loc[img_name].values.astype('int')).float()
             return image, label, img_name
         else:
             return image, img_name
