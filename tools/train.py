@@ -136,17 +136,24 @@ class LitModel(pl.LightningModule):
 def train(args):
 
     # Create dataset and dataloader
-    train_dataset = create_dataset(args.train_dirs, is_train=True)
-    val_dataset = create_dataset(args.val_dirs, is_train=False)
+    if args.train_full:
+        train_dataset = create_dataset(args.train_dirs + args.val_dirs, is_train=True)
+        train_loader = create_dataloaders(
+            train_dataset, batch_size=args.batch_size, 
+            num_workers=args.num_workers ,is_train=True
+        )
+    else:
+        train_dataset = create_dataset(args.train_dirs, is_train=True)
+        val_dataset = create_dataset(args.val_dirs, is_train=False)
 
-    train_loader = create_dataloaders(
-        train_dataset, batch_size=args.batch_size, 
-        num_workers=args.num_workers ,is_train=True
-    )
-    val_loader = create_dataloaders(
-        val_dataset, batch_size=args.batch_size, 
-        num_workers=args.num_workers ,is_train=True
-    )
+        train_loader = create_dataloaders(
+            train_dataset, batch_size=args.batch_size, 
+            num_workers=args.num_workers ,is_train=True
+        )
+        val_loader = create_dataloaders(
+            val_dataset, batch_size=args.batch_size, 
+            num_workers=args.num_workers ,is_train=True
+        )
 
     ori_model = Model(args.model, 10, args.mlp_structures, args.drop_rate)
     pl_model = LitModel(ori_model, args)
@@ -158,7 +165,11 @@ def train(args):
 
     print("Start training")
     print('-' * 25)
-    trainer.fit(pl_model, train_loader, val_loader)
+
+    if args.train_full:
+        trainer.fit(pl_model, train_loader)
+    else:
+        trainer.fit(pl_model, train_loader, val_loader)
 
     # Save model
     print('-' * 25)

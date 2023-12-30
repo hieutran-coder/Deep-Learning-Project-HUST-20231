@@ -27,6 +27,8 @@ def parse_arguments(argv):
     parser.add_argument('--epochs', type=int, default=5, help="Number of epochs")
     parser.add_argument('--clip_grad', type=float, default=5.0, help="Gradient clipping value")
 
+    parser.add_argument('--train_full', action='store_true', help="Train on full dataset")
+
     return parser.parse_args(argv)
 
 
