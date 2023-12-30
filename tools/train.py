@@ -181,4 +181,6 @@ def train(args):
     else:
         trainer.fit(pl_model, train_loader, val_loader)
 
+        print(f"Best validation f1: {pl_model.best_f1:.4f}")
+
     return pl_model.model
