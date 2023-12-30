@@ -125,10 +125,7 @@ class LitModel(pl.LightningModule):
         current_f1 = self.f1_val_avg.val()
         if current_f1 > self.best_f1:
             self.best_f1 = current_f1
-            if self.args.train_full:
-                torch.save(self.model.state_dict(), f"saved_models/{self.args.model}_full.pt")
-            else:
-                torch.save(self.model.state_dict(), f"saved_models/{self.args.model}_val.pt")
+            torch.save(self.model.state_dict(), f"saved_models/{self.args.model}_val.pt")
 
         print('-' * 10)
         print(f"Validation loss: {self.loss_val_avg.val():.4f}")
@@ -178,6 +175,7 @@ def train(args):
 
     if args.train_full:
         trainer.fit(pl_model, train_loader)
+        torch.save(pl_model.model.state_dict(), f"saved_models/{args.model}_full.pt")
     else:
         trainer.fit(pl_model, train_loader, val_loader)
 
