@@ -30,4 +30,7 @@ def test(model, args):
     df = pd.DataFrame(preds, columns=['HG', 'HT', 'TR', 'CTH', 'BD', 'VH', 'CTQ', 'DQT', 'KS', 'CVN'])
     df['name'] = img_names
     df = df[['name', 'HG', 'HT', 'TR', 'CTH', 'BD', 'VH', 'CTQ', 'DQT', 'KS', 'CVN']]
-    df.to_csv(f"prediction/{args.model}.csv", index=False)
+    if args.train_full:
+        df.to_csv(f"prediction/{args.model}_full.csv", index=False)
+    else:
+        df.to_csv(f"prediction/{args.model}_val.csv", index=False)

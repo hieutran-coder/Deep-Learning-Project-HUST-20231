@@ -174,6 +174,9 @@ def train(args):
     # Save model
     print('-' * 25)
     print("Saving model")
-    torch.save(pl_model.model.state_dict(), f"saved_models/{args.model}.pt")
+    if args.train_full:
+        torch.save(pl_model.model.state_dict(), f"saved_models/{args.model}_full.pt")
+    else:
+        torch.save(pl_model.model.state_dict(), f"saved_models/{args.model}_val.pt")
 
     return pl_model.model
