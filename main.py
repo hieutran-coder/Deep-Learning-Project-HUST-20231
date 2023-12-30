@@ -6,6 +6,7 @@ import os
 
 from argparse import ArgumentParser
 from tools.train import train
+from tools.test import test
 from config import TRAIN_DIRS, TEST_DIRS, VAL_DIRS
 
 
@@ -36,7 +37,6 @@ if __name__ == '__main__':
     warnings.filterwarnings('ignore')
     args = parse_arguments(sys.argv[1:])
 
-
     # Set seed
     pl.seed_everything(args.seed)
     torch.backends.cudnn.benchmark = True
@@ -48,4 +48,7 @@ if __name__ == '__main__':
     args.test_dirs = TEST_DIRS
 
     # Train model
-    train(args)
+    model = train(args)
+
+    # Test model
+    test(model, args)
