@@ -39,12 +39,12 @@ class LitModel(pl.LightningModule):
         feat_scheduler = optim.lr_scheduler.OneCycleLR(
             feat_optimizer, max_lr=self.args.lr,
             total_steps=self.args.epochs,
-            pct_start=0.075, cycle_momentum=False,
+            pct_start=self.args.warmup_pct, cycle_momentum=False,
         )
         head_scheduler = optim.lr_scheduler.OneCycleLR(
             head_optimizer, max_lr=self.args.lr_head,
             total_steps=self.args.epochs,
-            pct_start=0.075, cycle_momentum=False,
+            pct_start=self.args.warmup_pct, cycle_momentum=False,
         )
 
         return [feat_optimizer, head_optimizer], [feat_scheduler, head_scheduler]

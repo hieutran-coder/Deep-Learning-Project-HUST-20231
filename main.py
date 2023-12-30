@@ -27,6 +27,7 @@ def parse_arguments(argv):
     parser.add_argument('--weight_decay', type=float, default=1e-4, help="Weight decay for optimizer")
     parser.add_argument('--epochs', type=int, default=5, help="Number of epochs")
     parser.add_argument('--clip_grad', type=float, default=5.0, help="Gradient clipping value")
+    parser.add_argument('--warmup_pct', type=float, default=0.1, help="Warmup percentage")
 
     parser.add_argument('--train_full', action='store_true', help="Train on full dataset")
 
