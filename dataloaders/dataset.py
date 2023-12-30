@@ -17,7 +17,7 @@ class MultiLabelDataset(Dataset):
         self.root_dir = root_dir
         self.transform = transform
         self.labels = self._load_labels()
-        self.img_names = sorted(os.listdir(os.path.join(self.root_dir, "images")))
+        self.img_names = os.listdir(os.path.join(self.root_dir, "images"))
 
     def __len__(self):
         return len(os.listdir(os.path.join(self.root_dir, "images")))
