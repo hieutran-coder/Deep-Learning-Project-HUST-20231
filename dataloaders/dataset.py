@@ -67,7 +67,7 @@ def create_dataset(root_dir: List[str], is_train: bool = False):
         transforms.RandomGrayscale(p=0.2),
         rand_augment,
         transforms.ToTensor(),
-        RandomErasing(0.2),
+        RandomErasing(0.2, device='cpu'),
         transforms.Normalize(
             mean=[0.485, 0.456, 0.406], 
             std=[0.229, 0.224, 0.225]
