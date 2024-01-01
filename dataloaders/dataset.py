@@ -9,7 +9,6 @@ import timm
 
 from torch.utils.data import Dataset, ConcatDataset
 from timm.data import rand_augment_transform, RandomResizedCropAndInterpolation
-from timm.data.random_erasing import RandomErasing
 from torchvision import transforms
 
 
@@ -64,10 +63,9 @@ def create_dataset(root_dir: List[str], is_train: bool = False):
     rand_augment = rand_augment_transform("rand-m9-n3-mstd0.5", hparams=dict())
     train_transform = transforms.Compose([
         RandomResizedCropAndInterpolation(224),
-        transforms.RandomGrayscale(p=0.2),
+        transforms.RandomGrayscale(p=0.1),
         rand_augment,
         transforms.ToTensor(),
-        RandomErasing(0.2, device='cpu'),
         transforms.Normalize(
             mean=[0.485, 0.456, 0.406], 
             std=[0.229, 0.224, 0.225]
