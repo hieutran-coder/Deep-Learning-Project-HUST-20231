@@ -63,7 +63,7 @@ def create_dataset(root_dir: List[str], is_train: bool = False):
     rand_augment = rand_augment_transform("rand-m9-n3-mstd0.5", hparams=dict())
     train_transform = transforms.Compose([
         RandomResizedCropAndInterpolation(224),
-        transforms.RandomGrayscale(p=0.1),
+        # transforms.RandomGrayscale(p=0.1),
         rand_augment,
         transforms.ToTensor(),
         transforms.Normalize(
